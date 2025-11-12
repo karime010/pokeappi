@@ -8,6 +8,10 @@ app.secret_key = "tu_clave_secreta"
 def index():
     return render_template("index.html")
 
+@app.route('/pokemon')
+def pokemon():
+    return render_template("pokemon.html")
+
 @app.route('/search',methods=['POST']) 
 def search_pokemon():
     pokemon_name = request.form.get('pokemon_name','').strip().lower()
@@ -27,8 +31,19 @@ def search_pokemon():
 pokemon_info= {
     'name' : pokemon_data['name'].title(),
     'id' : pokemon_data['id'],
-    'height' : pokemon_data
+    'height' : pokemon_data['height']/10,
+    'weight' : pokemon_data['weight']/10,
+    'sprite' : pokemon_data['sprites']['font_default'],
+    'types' : [t['type']['name'].title() for t in pokemon_data['types']],
+    'abilities' : [a['ability']['name'].title() for a in pokemon_data['abilities']],
+    'stats' : {}
 }
+
+    for stat in pokemon_data['stats']:
+    stat_name = stat['stat']['name'].replace('-', ' ').title()
+    pokemon_info['stats'][stat_name] = stat['base_stat']
+
+    return pokemon_info
 
 
 if __name__=='__main__':
