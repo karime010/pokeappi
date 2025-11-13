@@ -17,7 +17,7 @@ def search_pokemon():
         return redirect(url_for('index'))
     
     try:
-        resp = request.get(f"{API}{pokemon_name}")
+        resp = requests.get(f"{API}{pokemon_name}")
         if resp.status_code == 200:
             pokemon_data = resp.json()
             pokemon_info= {
@@ -34,13 +34,11 @@ def search_pokemon():
         else:
             flash(f'pokemon "{pokemon_name}"no encontrado', 'error')
             return redirect(url_for('index'))
-    except requests.exception.RequestException as e:
+    except requests.exceptions.RequestException as e:
         flash('Error al buscar el pokemon','error')
         return redirect(url_for('index'))
 
-@app.route('/pokemon')
-def pokemon():
-    return render_template("pokemon.html")
+
 
 if __name__=='__main__':
     app.run(debug=True)

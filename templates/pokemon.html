@@ -2,9 +2,14 @@
 {% block contenido %}
 
 <div class="card" style="width: 18rem;">
-  <img src="..." class="card-img-top" alt="...">
+  <h2>{{ pokemon.name }} (ID: {{pokemon.id}})</h2>
+  <img src="{{ pokemon.image }}" class="card-img-top" alt="{{ pokemon.name }}">
   <div class="card-body">
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
+    <p>Peso: {{ pokemon.weight }} kg</p> 
+    <p>Altura: {{ pokemon.height }}m</p>
+    <p>Tipos: {{ pokemon.types | join(', ') }}</p>
+    <p>Habilidades: {{ pokemon.abilities | join(', ') }}</p>
+    <a href="{{url_for('index') }}" class="btn btn-primary">Volver a inicio</a>
   </div>
 </div>
 
